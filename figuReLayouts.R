@@ -224,15 +224,12 @@ layouts.special1 <- function(nr=4, nc=3, h=4, nhead=2, nlab=2, addletters=FALSE)
   if(addletters){ltr<-nc; ltr.indicator<-1}else{ltr<-0; ltr.indicator<-0}
   mat <- matrix(nrow = nr*h+nhead, ncol=nc*h+nlab+ltr); dim(mat)
   fn <- 1
-  print(1)
   
   ## Empty space at top left corner
   mat[1:nhead,1:nlab] <- fn; fn<-fn+1
-  print(2)
   
   ## Title
   mat[1,(nlab+1):dim(mat)[2]] <- fn; fn<-fn+1
-  print(3)
   
   ## Subtitles
   for(subhead in 2:nhead){
@@ -242,36 +239,26 @@ layouts.special1 <- function(nr=4, nc=3, h=4, nhead=2, nlab=2, addletters=FALSE)
     }
   }
   
-  print(4)
   idx <- nhead+1 ## this idx to simplify code
   for (i in seq(idx, idx+h*(nr-1)+1, 2*h)){
     # Outer label
-    print(5)
     mat[i:(i+2*h-1),1] <- fn; fn<-fn+1
     # Inner labels
-    print(6)
     mat[i:(i+h-1),2] <- fn; fn<-fn+1
     mat[(i+h):(i+2*h-1),2] <- fn; fn<-fn+1
     # First row of plots
-    print(7)
-    print(dim(mat))
     for (j in seq(nlab+1, (nlab+1)+(h+ltr.indicator)*(nc-1)+1, h+(ltr/nc))){
-      print(c("j",j))
       if(addletters){
-        print(71)
         mat[i,j] <- fn; fn<-fn+1 
-        print(72)
         if(h>1){
           mat[(i+1):(i+h-1),j] <- fn; fn<-fn+1 
         }
-        print(73)
         mat[i:(i+h-1),(j+1):(j+1+h-1)] <- fn; fn<-fn+1 
       } else{
         mat[i:(i+h-1),j:(j+h-1)] <- fn; fn<-fn+1 
       }
     }
     # Next row of plots
-    print(8)
     for (j in seq(nlab+1, (nlab+1)+(h+ltr.indicator)*(nc-1)+1, h+(ltr/nc))){
       if(addletters){
         mat[i+h,j] <- fn; fn<-fn+1 
@@ -284,33 +271,32 @@ layouts.special1 <- function(nr=4, nc=3, h=4, nhead=2, nlab=2, addletters=FALSE)
       }
     }
   };
-  print(mat)
   layout(mat)
   
 }
 
 
-plots.layouts.special1 <- function(plotfxns, nr=4, nc=3, h=4, nhead=2, nlab=2, header="Header", subtitles=c("Subhead1","Subhead2","Subhead3"), outside.labels=c("Outside1","Outside2"), inside.labels=c("Inside1","Inside2"), addletters=FALSE, alphabet=uppercase){
+plots.layouts.special1 <- function(plotfxns, nr=4, nc=3, h=4, nhead=2, nlab=2, header="Header", subtitles=c("Subhead1","Subhead2","Subhead3"), outside.labels=c("Outside1","Outside2"), inside.labels=c("Inside1","Inside2"), addletters=FALSE, alphabet=uppercase, mgp=c(3,0.6,0), lettermar=rep(0.1,4), figuremar=c(4,5,1,1), alt.lettermar=c(0.1,1,0.1,0.1), subheadmar=c(0.1,5,1,1)){
   layouts.special1(nr=nr, nc=nc, h=h, nhead=nhead, nlab = nlab, addletters = addletters)
+  par(mgp=mgp)
   rot=90
-  print("HW")
   # Plot empty space at top left
-  par(mar=rep(0.1,4)); emptyplot()
+  par(mar=lettermar); emptyplot()
   
   # Plot header
-  par(mar=rep(0.1,4)); textplot(header,cex=3) 
+  par(mar=lettermar); textplot(header,cex=3) 
   
   # Plot sub-headings...
-  par(mar=c(0.1,5,1,1)); 
+  par(mar=subheadmar); 
   for(i in 1:((nhead-1)*nc)){
-    if(addletters){par(mar=rep(0.1,4)); emptyplot(); par(mar=c(0.1,5,1,1))}
+    if(addletters){par(mar=lettermar); emptyplot(); par(mar=subheadmar)}
     textplot(subtitles[i])
   }
   
   ## Plot side labels and figures
   fig.num <- 1
   for(i in 1:(nr/2)){
-    par(mar=rep(0.1,4)); 
+    par(mar=lettermar); 
     #OPutside label
     textplot(outside.labels[i], rot=rot, pol=TRUE); 
     
@@ -319,13 +305,13 @@ plots.layouts.special1 <- function(plotfxns, nr=4, nc=3, h=4, nhead=2, nlab=2, h
     textplot(inside.labels[2],cex=1.5, rot=rot)
     
     ## Figures -- plotting 2 rows x nc
-    par(mar=c(4,5,1,1))
+    par(mar=figuremar)
     for(idx in fig.num:(fig.num+2*nc-1)){
       if(addletters){
-        par(mar=c(0.1,1,0.1,0.1))
+        par(mar=alt.lettermar)
         add.figure.letter(alphabet,idx)
         if(h>1){emptyplot()}
-        par(mar=c(4,5,1,1))
+        par(mar=figuremar)
       }
       #print(idx)
       plotfxns[[idx]]()
