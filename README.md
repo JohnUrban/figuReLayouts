@@ -11,6 +11,10 @@ Having said that, this little set of functions that make use of layout() has hel
 
 Feel free to contribute, and I will add your name to the list of contributors.
 
+NOTE:
+Some of the boring plots with M rows and N columns (MxN) can be finagled with par(mfrow=c(M,N)). 
+One can then put the letters in the upper left hand of the plot using text/mtext functions (maybe others).
+This package tries to make that part of it (lettering) automated with layouts().
 
 
 # Contributors
