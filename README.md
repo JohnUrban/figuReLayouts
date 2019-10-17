@@ -19,14 +19,10 @@ John Urban (2019)
 
 # Example plots
 
->Boring 2x2
-
 ![Boring 2x2](images/boring-2x2-ABCD.png)
 
->Boring 4x2
 
 ![Boring 4x2](images/boring-4x2-with-R-logos.png)
 
->Boring specialized plot
 
 ![Boring Special1](images/boring-special1.png)
