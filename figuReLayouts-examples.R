@@ -10,6 +10,7 @@ library(png)
 plotfxns <- list(p1, p2, p3, p4)
 plots.layouts.ABC(plotfxns, nr = 2, nc = 2)
 plots.layouts.ABC(plotfxns, nr = 2, nc = 2, alphabet = lowercase)
+plots.layouts.ABC(plotfxns, nr = 2, nc = 2, alphabet = emptyalphabet)
 plots.layouts.ABC(plotfxns, nr = 2, nc = 2, fill.in.byrow = F)
 
 ## EXAMPLE 2: Arrange these plots in the first 4 slots of a matrix with more empty space 
@@ -37,6 +38,18 @@ plotfxns <- list(p1, plotpng, plotpng.preserveAspectRatio, p1, plotpng, plotpng.
 plots.layouts.special1(plotfxns = plotfxns)
 plots.layouts.special1(plotfxns = plotfxns, addletters = TRUE)
 plots.layouts.special1(plotfxns = plotfxns, h=6, addletters = TRUE)
+
+
+## EXAMPLE 6: Making pieces of the 2x2 figure with 4 boring scatter plots
+plotfxns <- list(p1, p2, p3, p4)
+## With letters
+for(i in 1:4){
+  plots.layouts.ABC(list(plotfxns[[i]]), nr = 1, nc = 1, alphabet = substr(uppercase, i, i))
+}
+## Without letters
+for(i in 1:4){
+  plots.layouts.ABC(list(plotfxns[[i]]), nr = 1, nc = 1, alphabet = ' ')
+}
 
 
 

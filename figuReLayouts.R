@@ -4,7 +4,7 @@
 
 uppercase <- 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 lowercase <- 'abcdefghijklmnopqrstuvwxyz'
-
+emptyalphabet <- '                                                  '
 
 layouts.square <- function(n, fill.in.byrow=TRUE){
   # n = ncol and nrow
